@@ -18,5 +18,14 @@ interface ITableReflection {
 	/**
 	 * return string
 	 */
-	function getComment();
+	function getTableComment();
+	function getType($field);
+	function getLen($field);
+	function isUnsiged($field);
+	function isNullField($field);
+	function getDefault($field);
+	function getComment($field);
+	function isPk($field);
+	function isAutoIncrement($field);
+	function isUnique($field);
 }

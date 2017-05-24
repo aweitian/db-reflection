@@ -2,7 +2,7 @@
 
 namespace Tian;
 
-class MySqlReflection implements IDbReflection {
+class MySqlDbReflection implements IDbReflection {
 	/**
 	 *
 	 * @var \Tian\Connection\IConnection
