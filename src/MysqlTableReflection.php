@@ -33,14 +33,14 @@ namespace Tian;
 class MysqlTableReflection implements ITableReflection {
 	/**
 	 *
-	 * @var \Tian\Connection\IConnection
+	 * @var \Tian\Connection\MysqlPdoConn
 	 */
-	private $connection;
+	public $connection;
 	/**
 	 *
 	 * @var \Tian\ICache
 	 */
-	private $cache;
+	public $cache;
 	/**
 	 *
 	 * @var string
@@ -62,10 +62,13 @@ class MysqlTableReflection implements ITableReflection {
 	 * @var array
 	 */
 	private static $col_descriptions = [ ];
-	public function __construct($tabname, \Tian\Connection\IConnection $connection, \Tian\ICache $cache = null) {
+	public function __construct($tabname, \Tian\Connection\MysqlPdoConn $connection, \Tian\ICache $cache = null) {
 		$this->connection = $connection;
 		$this->cache = $cache;
 		$this->tabname = $tabname;
+	}
+	public function getTableName() {
+		return $this->tabname;
 	}
 	public function cacheKeyKeyDesc() {
 		return 'Tian.MysqlTableReflection.key_descriptions.' . $this->tabname;
@@ -137,7 +140,6 @@ class MysqlTableReflection implements ITableReflection {
 	}
 	public function isAutoIncrement($field) {
 		$this->initTableColDecription ();
-		var_dump ( self::$col_descriptions [$this->tabname] );
 		return self::$col_descriptions [$this->tabname] [$field] ["Extra"] === 'auto_increment';
 	}
 	public function isUnique($field) {

@@ -5,16 +5,16 @@ namespace Tian;
 class MySqlDbReflection implements IDbReflection {
 	/**
 	 *
-	 * @var \Tian\Connection\IConnection
+	 * @var \Tian\Connection\MysqlPdoConn
 	 */
-	private $connection;
+	public $connection;
 	/**
 	 *
 	 * @var \Tian\ICache
 	 */
-	private $cache;
+	public $cache;
 	private static $descriptions = null;
-	public function __construct(\Tian\Connection\IConnection $connection, \Tian\ICache $cache = null) {
+	public function __construct(\Tian\Connection\MysqlPdoConn $connection, \Tian\ICache $cache = null) {
 		$this->cache = $cache;
 		$this->connection = $connection;
 		if (is_null ( self::$descriptions ))

@@ -18,6 +18,10 @@ interface ITableReflection {
 	/**
 	 * return string
 	 */
+	function getTableName();
+	/**
+	 * return string
+	 */
 	function getTableComment();
 	function getType($field);
 	function getLen($field);
