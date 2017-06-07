@@ -69,7 +69,9 @@ class MySqlDbReflection implements IDbReflection {
 			}
 		}
 		$ret = $this->connection->fetchAll ( "SHOW TABLE status FROM `" . $this->connection->getDbName () . "`" );
-		$this->cache->set ( 'dbflection.alldescription', $ret, 0 );
+		if (! is_null ( $this->cache )) {
+			$this->cache->set ( 'dbflection.alldescription', $ret, 0 );
+		}
 		return $ret;
 	}
 }

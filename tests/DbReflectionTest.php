@@ -3,8 +3,10 @@ class DbReflectionTest extends PHPUnit_Framework_TestCase {
 	private $con;
 	public function setUp()
 	{
+		//echo "setup";
 		$this->con = new \Tian\Connection\MysqlPdoConn([
 				'host' => '127.0.0.1',
+				'port' => 3306,
 				'database' => 'garri',
 				'user' => 'root',
 				'password' => 'root',
@@ -32,17 +34,19 @@ class DbReflectionTest extends PHPUnit_Framework_TestCase {
 	
 	public function tearDown()
 	{
+		//echo "tear down";
 		$this->con->exec("
 			DROP TABLE `gg`;
 			DROP TABLE `schedules`;
 		");
 	}
 	public function testMysqlReflection() {
-		$cache = new \Tian\Memcache([
-				'host'     => '192.168.33.10',
-				'port'     => 11111,
-		]);
-		$info = new \Tian\MySqlDbReflection($this->con,$cache);
+// 		$cache = new \Tian\Memcache([
+// 				'host'     => '192.168.33.10',
+// 				'port'     => 11111,
+// 		]);
+		//echo "test...";
+		$info = new \Tian\MySqlDbReflection($this->con,null);
 		$this->assertTrue($info->tableExists('gg'));
 		$this->assertTrue($info->tableExists('schedules'));
 		$this->assertTrue(!$info->tableExists('lol'));

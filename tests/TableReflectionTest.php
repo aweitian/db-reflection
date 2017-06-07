@@ -32,10 +32,11 @@ CREATE TABLE `gg` (
 			  KEY `schedeles_doc` (`schedeles_doc`)
 			) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8
 		" );
-		$this->cache = new \Tian\Memcache ( [ 
-				'host' => '192.168.33.10',
-				'port' => 11111 
-		] );
+// 		$this->cache = new \Tian\Memcache ( [ 
+// 				'host' => '192.168.33.10',
+// 				'port' => 11111 
+// 		] );
+		$this->cache = null;
 	}
 	public function tearDown() {
 		$this->con->exec ( "
