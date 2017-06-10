@@ -215,7 +215,7 @@ class MysqlTableReflection implements ITableReflection {
 			return;
 		}
 		
-		self::$col_descriptions [$this->tabname] = array_combine ( array_column ( $result, 'Field' ), $result );
+		self::$col_descriptions [$this->tabname] = array_combine ( \Tian\Base\Arr::column( $result, 'Field' ), $result );
 		if (! is_null ( $this->cache )) {
 			$this->cache->set ( $this->cacheKeyKeyDesc (), self::$col_descriptions [$this->tabname], 0 );
 		}
