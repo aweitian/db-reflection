@@ -1,6 +1,6 @@
 <?php
 
-namespace Tian;
+namespace Tian\Db;
 
 interface ITableReflection {
 	/**

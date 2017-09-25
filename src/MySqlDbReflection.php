@@ -1,8 +1,8 @@
 <?php
 
-namespace Tian;
+namespace Tian\Db;
 use \Tian\Connection\MysqlPdoConn;
-
+use \Tian\ICache;
 class MySqlDbReflection implements IDbReflection {
     /**
      *
