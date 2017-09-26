@@ -18,8 +18,8 @@
   "minimum-stability": "stable",
   "require": {
     "php": ">=5.4.0",
-    "aweitian/cache": "~1.0",
-    "aweitian/db-connection": "~1.0",
+    "aweitian/cache": "dev-master",
+    "aweitian/db-connection": "dev-master",
 	"aweitian/base":"dev-master"
   },
   "require-dev": {
@@ -28,7 +28,7 @@
   "autoload": {
     "files": [],
     "psr-4": {
-      "Tian\\": "src/"
+      "Tian\\Db\\": "src/"
     }
   }
 }

@@ -3,8 +3,9 @@ class TableReflectionTest extends PHPUnit_Framework_TestCase {
 	private $con;
 	private $cache;
 	public function setUp() {
-		$this->con = new \Tian\Connection\MysqlPdoConn ( [ 
+		$this->con = new \Tian\Connection\MysqlPdoConn ( [
 				'host' => '127.0.0.1',
+				'port' => 3306,
 				'database' => 'garri',
 				'user' => 'root',
 				'password' => 'root',
@@ -49,14 +50,14 @@ CREATE TABLE `gg` (
 		
 	}
 	public function testPk() {
-		$info = new \Tian\MysqlTableReflection ( 'gg', $this->con, $this->cache );
+		$info = new \Tian\Db\MysqlTableReflection ( 'gg', $this->con, $this->cache );
 		$this->assertArraySubset ( [ 
 				'pk1',
 				'pk2' 
 		], $info->getPk () );
 	}
 	public function testCol() {
-		$info = new \Tian\MysqlTableReflection ( 'gg', $this->con, $this->cache );
+		$info = new \Tian\Db\MysqlTableReflection ( 'gg', $this->con, $this->cache );
 		$this->assertArraySubset ( [
 				'pk1',
 				'pk2',
@@ -68,48 +69,48 @@ CREATE TABLE `gg` (
 		], $info->getColumnNames() );
 	}
 	public function testComment() {
-		$info = new \Tian\MysqlTableReflection ( 'gg', $this->con, $this->cache );
+		$info = new \Tian\Db\MysqlTableReflection ( 'gg', $this->con, $this->cache );
 		$this->assertEquals( 'gg_comment', $info->getTableComment());
 	}
 	public function testTableType() {
-		$info = new \Tian\MysqlTableReflection ( 'gg', $this->con, $this->cache );
+		$info = new \Tian\Db\MysqlTableReflection ( 'gg', $this->con, $this->cache );
 		$this->assertEquals( 'InnoDB', $info->getEngineType() );
 	}
 	
 	public function testType(){
-		$info = new \Tian\MysqlTableReflection ( 'gg', $this->con, $this->cache );
+		$info = new \Tian\Db\MysqlTableReflection ( 'gg', $this->con, $this->cache );
 		$this->assertEquals( 'enum', $info->getType('fenum'));
 	}
 	
 	public function testLen(){
-		$info = new \Tian\MysqlTableReflection ( 'gg', $this->con, $this->cache );
+		$info = new \Tian\Db\MysqlTableReflection ( 'gg', $this->con, $this->cache );
 		$this->assertEquals( '10', $info->getLen('data'));
 	}
 	
 	public function testisunsigned(){
-		$info = new \Tian\MysqlTableReflection ( 'gg', $this->con, $this->cache );
+		$info = new \Tian\Db\MysqlTableReflection ( 'gg', $this->con, $this->cache );
 		$this->assertTrue( $info->isUnsiged('fint'));
 	}
 	
 	public function testisNullField(){
-		$info = new \Tian\MysqlTableReflection ( 'gg', $this->con, $this->cache );
+		$info = new \Tian\Db\MysqlTableReflection ( 'gg', $this->con, $this->cache );
 		$this->assertTrue( $info->isNullField('data'));
 		$this->assertNotTrue($info->isNullField('notnullable'));
 	}
 	
 	
 	public function testgetDefault(){
-		$info = new \Tian\MysqlTableReflection ( 'gg', $this->con, $this->cache );
+		$info = new \Tian\Db\MysqlTableReflection ( 'gg', $this->con, $this->cache );
 		$this->assertEquals('16', $info->getDefault('fint'));
 	}
 	
 	public function testisPk(){
-		$info = new \Tian\MysqlTableReflection ( 'gg', $this->con, $this->cache );
+		$info = new \Tian\Db\MysqlTableReflection ( 'gg', $this->con, $this->cache );
 		$this->assertTrue( $info->isPk('pk1'));
 	}
 	
 	public function testisAutoIncrement(){
-		$info = new \Tian\MysqlTableReflection ( 'schedules', $this->con, $this->cache );
+		$info = new \Tian\Db\MysqlTableReflection ( 'schedules', $this->con, $this->cache );
 		$this->assertTrue( $info->isAutoIncrement('schedeles_id'));
 	}
 }

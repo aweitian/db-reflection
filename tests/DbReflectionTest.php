@@ -46,7 +46,7 @@ class DbReflectionTest extends PHPUnit_Framework_TestCase {
 // 				'port'     => 11111,
 // 		]);
 		//echo "test...";
-		$info = new \Tian\MySqlDbReflection($this->con,null);
+		$info = new \Tian\Db\MySqlDbReflection($this->con,null);
 		$this->assertTrue($info->tableExists('gg'));
 		$this->assertTrue($info->tableExists('schedules'));
 		$this->assertTrue(!$info->tableExists('lol'));
