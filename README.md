@@ -10,6 +10,12 @@ Config组件用于完成网站配置项管理。
 composer require aweitian/config
 ````
 
+####安装组件
+单元测试
+需要数据库garri
+./vendor/bin/phpunit
+
+
 ####加载.env文件
 参数为.env文件所在目录
 ````
@@ -20,6 +26,7 @@ Config::loadEnv(dirname(__DIR__));
 ````
 DB_DRIVER=mysq22l
 DB_HOST=127.0.0.1
+DB_PORT=3306
 DB_DATABASE=hdphp
 DB_USER=root
 DB_PASSWORD=

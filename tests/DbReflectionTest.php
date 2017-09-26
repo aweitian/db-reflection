@@ -4,6 +4,7 @@ class DbReflectionTest extends PHPUnit_Framework_TestCase {
 	public function setUp()
 	{
 		//echo "setup";
+
 		$this->con = new \Tian\Connection\MysqlPdoConn([
 				'host' => '127.0.0.1',
 				'port' => 3306,
