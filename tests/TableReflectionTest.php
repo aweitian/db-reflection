@@ -7,14 +7,14 @@ class TableReflectionTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->con = new Aw\Db\Connection\Mysql ([
+        $this->con = new Aw\Db\Connection\Mysql (array(
             'host' => '127.0.0.1',
             'port' => 3306,
             'database' => 'garri',
             'user' => 'root',
             'password' => 'root',
             'charset' => 'utf8'
-        ]);
+        ));
         $this->con->exec("
 CREATE TABLE `gg` (
   `pk1` int(10) unsigned NOT NULL,
@@ -59,16 +59,16 @@ CREATE TABLE `gg` (
     public function testPk()
     {
         $info = new \Aw\Db\Reflection\Mysql\Table ('gg', $this->con, $this->cache);
-        $this->assertArraySubset([
+        $this->assertArraySubset(array(
             'pk1',
             'pk2'
-        ], $info->getPk());
+        ), $info->getPk());
     }
 
     public function testCol()
     {
         $info = new \Aw\Db\Reflection\Mysql\Table ('gg', $this->con, $this->cache);
-        $this->assertArraySubset([
+        $this->assertArraySubset(array(
             'pk1',
             'pk2',
             'fint',
@@ -76,7 +76,7 @@ CREATE TABLE `gg` (
             'fenum',
             'fset',
             'notnullable',
-        ], $info->getColumnNames());
+        ), $info->getColumnNames());
     }
 
     public function testComment()

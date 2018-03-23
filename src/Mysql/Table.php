@@ -236,9 +236,9 @@ class Table implements ITableReflection
                 return;
             }
         }
-        $result = $this->connection->fetch("show table status from `" . $this->connection->getDbName() . "` where name=:tablename", [
+        $result = $this->connection->fetch("show table status from `" . $this->connection->getDbName() . "` where name=:tablename", array(
             "tablename" => $this->tabname
-        ]);
+        ));
         self::$tab_descriptions [$this->tabname] = $result;
         if (!is_null($this->cache)) {
             $this->cache->set($this->cacheKeyDesc(), $result, 0);
@@ -260,9 +260,9 @@ class Table implements ITableReflection
         }
         $result = $this->connection->fetchAll("SHOW FULL COLUMNS FROM `$this->tabname`");
         if (count($result) == 0) {
-            self::$col_descriptions [$this->tabname] = [];
+            self::$col_descriptions [$this->tabname] = array();
             if (!is_null($this->cache)) {
-                $this->cache->set($this->cacheKeyKeyDesc(), [], 0);
+                $this->cache->set($this->cacheKeyKeyDesc(), array(), 0);
             }
             return;
         }
