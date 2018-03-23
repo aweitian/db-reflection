@@ -6,10 +6,9 @@
 composer require aweitian/db-reflection
 ````
 
-### 安装组件
-单元测试
+### 单元测试
 需要数据库garri
-./vendor/bin/phpunit
+> ./vendor/bin/phpunit
 
 ```
 $info = new Table ('gg', $this->con, $this->cache);
