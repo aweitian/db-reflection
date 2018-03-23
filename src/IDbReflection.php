@@ -1,13 +1,17 @@
 <?php
 
-namespace Tian\Db;
+namespace Aw\Db\Reflection;
 
-interface IDbReflection {
-	function getDbName();
-	function getTableNames();
-	/**
-	 * 包括VIEW
-	 */
-	function getFullTableNames();
-	function tableExists($tabname);
+interface IDbReflection
+{
+    function getDbName();
+
+    function getTableNames();
+
+    /**
+     * 包括VIEW
+     */
+    function getFullTableNames();
+
+    function tableExists($tabname);
 }

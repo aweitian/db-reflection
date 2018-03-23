@@ -5,14 +5,14 @@ class DbReflectionTest extends PHPUnit_Framework_TestCase {
 	{
 		//echo "setup";
 
-		$this->con = new \Tian\Connection\MysqlPdoConn([
+		$this->con = new Aw\Db\Connection\Mysql(array(
 				'host' => '127.0.0.1',
 				'port' => 3306,
 				'database' => 'garri',
 				'user' => 'root',
 				'password' => 'root',
 				'charset' => 'utf8'
-		]);
+        ));
 		$this->con->exec('
 			CREATE TABLE `gg` (
 				`pk1` int(10) unsigned NOT NULL,
@@ -42,12 +42,7 @@ class DbReflectionTest extends PHPUnit_Framework_TestCase {
 		");
 	}
 	public function testMysqlReflection() {
-// 		$cache = new \Tian\Memcache([
-// 				'host'     => '192.168.33.10',
-// 				'port'     => 11111,
-// 		]);
-		//echo "test...";
-		$info = new \Tian\Db\MySqlDbReflection($this->con,null);
+		$info = new \Aw\Db\Reflection\Mysql\Db($this->con,null);
 		$this->assertTrue($info->tableExists('gg'));
 		$this->assertTrue($info->tableExists('schedules'));
 		$this->assertTrue(!$info->tableExists('lol'));

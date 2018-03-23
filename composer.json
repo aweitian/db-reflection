@@ -1,7 +1,7 @@
 {
   "name": "aweitian/db-reflection",
-  "description": "用于管理网站配置项",
-  "type": "project",
+  "description": "获取数据库信息和表信息",
+  "type": "library",
   "keywords": [
     "aweitian",
     "tiananwei",
@@ -16,18 +16,17 @@
     }
   ],
   "require": {
-    "php": ">=5.4.0",
-    "aweitian/cache": "dev-master",
-    "aweitian/db-connection": "dev-master",
-	"aweitian/base":"dev-master"
+    "php": ">=5.3.0",
+    "aweitian/cache": "~2.0",
+    "aweitian/db-connection": "~2.0"
   },
   "require-dev": {
-        "phpunit/phpunit": "~5.0"
+        "phpunit/phpunit": "~4.0"
   },
   "autoload": {
     "files": [],
     "psr-4": {
-      "Tian\\Db\\": "src/"
+      "Aw\\Db\\Reflection\\": "src/"
     }
   }
 }

@@ -1,17 +1,21 @@
 <?php
-class TableReflectionTest extends PHPUnit_Framework_TestCase {
-	private $con;
-	private $cache;
-	public function setUp() {
-		$this->con = new \Tian\Connection\MysqlPdoConn ( [
-				'host' => '127.0.0.1',
-				'port' => 3306,
-				'database' => 'garri',
-				'user' => 'root',
-				'password' => 'root',
-				'charset' => 'utf8' 
-		] );
-		$this->con->exec ( "
+
+class TableReflectionTest extends PHPUnit_Framework_TestCase
+{
+    private $con;
+    private $cache;
+
+    public function setUp()
+    {
+        $this->con = new Aw\Db\Connection\Mysql ([
+            'host' => '127.0.0.1',
+            'port' => 3306,
+            'database' => 'garri',
+            'user' => 'root',
+            'password' => 'root',
+            'charset' => 'utf8'
+        ]);
+        $this->con->exec("
 CREATE TABLE `gg` (
   `pk1` int(10) unsigned NOT NULL,
   `pk2` int(10) unsigned NOT NULL,
@@ -32,87 +36,104 @@ CREATE TABLE `gg` (
 			  PRIMARY KEY (`schedeles_id`),
 			  KEY `schedeles_doc` (`schedeles_doc`)
 			) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8
-		" );
+		");
 // 		$this->cache = new \Tian\Memcache ( [ 
 // 				'host' => '192.168.33.10',
 // 				'port' => 11111 
 // 		] );
-		$this->cache = null;
-	}
-	public function tearDown() {
-		$this->con->exec ( "
+        $this->cache = null;
+    }
+
+    public function tearDown()
+    {
+        $this->con->exec("
 			DROP TABLE `gg`;
 			DROP TABLE `schedules`;
-		" );
-		if($this->cache){
-			$this->cache->flush ();
-		}
-		
-	}
-	public function testPk() {
-		$info = new \Tian\Db\MysqlTableReflection ( 'gg', $this->con, $this->cache );
-		$this->assertArraySubset ( [ 
-				'pk1',
-				'pk2' 
-		], $info->getPk () );
-	}
-	public function testCol() {
-		$info = new \Tian\Db\MysqlTableReflection ( 'gg', $this->con, $this->cache );
-		$this->assertArraySubset ( [
-				'pk1',
-				'pk2',
-				'fint',
-				'data',
-				'fenum',
-				'fset',
-				'notnullable',
-		], $info->getColumnNames() );
-	}
-	public function testComment() {
-		$info = new \Tian\Db\MysqlTableReflection ( 'gg', $this->con, $this->cache );
-		$this->assertEquals( 'gg_comment', $info->getTableComment());
-	}
-	public function testTableType() {
-		$info = new \Tian\Db\MysqlTableReflection ( 'gg', $this->con, $this->cache );
-		$this->assertEquals( 'InnoDB', $info->getEngineType() );
-	}
-	
-	public function testType(){
-		$info = new \Tian\Db\MysqlTableReflection ( 'gg', $this->con, $this->cache );
-		$this->assertEquals( 'enum', $info->getType('fenum'));
-	}
-	
-	public function testLen(){
-		$info = new \Tian\Db\MysqlTableReflection ( 'gg', $this->con, $this->cache );
-		$this->assertEquals( '10', $info->getLen('data'));
-	}
-	
-	public function testisunsigned(){
-		$info = new \Tian\Db\MysqlTableReflection ( 'gg', $this->con, $this->cache );
-		$this->assertTrue( $info->isUnsiged('fint'));
-	}
-	
-	public function testisNullField(){
-		$info = new \Tian\Db\MysqlTableReflection ( 'gg', $this->con, $this->cache );
-		$this->assertTrue( $info->isNullField('data'));
-		$this->assertNotTrue($info->isNullField('notnullable'));
-	}
-	
-	
-	public function testgetDefault(){
-		$info = new \Tian\Db\MysqlTableReflection ( 'gg', $this->con, $this->cache );
-		$this->assertEquals('16', $info->getDefault('fint'));
-	}
-	
-	public function testisPk(){
-		$info = new \Tian\Db\MysqlTableReflection ( 'gg', $this->con, $this->cache );
-		$this->assertTrue( $info->isPk('pk1'));
-	}
-	
-	public function testisAutoIncrement(){
-		$info = new \Tian\Db\MysqlTableReflection ( 'schedules', $this->con, $this->cache );
-		$this->assertTrue( $info->isAutoIncrement('schedeles_id'));
-	}
+		");
+        if ($this->cache) {
+            $this->cache->flush();
+        }
+
+    }
+
+    public function testPk()
+    {
+        $info = new \Aw\Db\Reflection\Mysql\Table ('gg', $this->con, $this->cache);
+        $this->assertArraySubset([
+            'pk1',
+            'pk2'
+        ], $info->getPk());
+    }
+
+    public function testCol()
+    {
+        $info = new \Aw\Db\Reflection\Mysql\Table ('gg', $this->con, $this->cache);
+        $this->assertArraySubset([
+            'pk1',
+            'pk2',
+            'fint',
+            'data',
+            'fenum',
+            'fset',
+            'notnullable',
+        ], $info->getColumnNames());
+    }
+
+    public function testComment()
+    {
+        $info = new \Aw\Db\Reflection\Mysql\Table ('gg', $this->con, $this->cache);
+        $this->assertEquals('gg_comment', $info->getTableComment());
+    }
+
+    public function testTableType()
+    {
+        $info = new \Aw\Db\Reflection\Mysql\Table ('gg', $this->con, $this->cache);
+        $this->assertEquals('InnoDB', $info->getEngineType());
+    }
+
+    public function testType()
+    {
+        $info = new \Aw\Db\Reflection\Mysql\Table ('gg', $this->con, $this->cache);
+        $this->assertEquals('enum', $info->getType('fenum'));
+    }
+
+    public function testLen()
+    {
+        $info = new \Aw\Db\Reflection\Mysql\Table ('gg', $this->con, $this->cache);
+        $this->assertEquals('10', $info->getLen('data'));
+    }
+
+    public function testisunsigned()
+    {
+        $info = new \Aw\Db\Reflection\Mysql\Table ('gg', $this->con, $this->cache);
+        $this->assertTrue($info->isUnsiged('fint'));
+    }
+
+    public function testisNullField()
+    {
+        $info = new \Aw\Db\Reflection\Mysql\Table ('gg', $this->con, $this->cache);
+        $this->assertTrue($info->isNullField('data'));
+        $this->assertNotTrue($info->isNullField('notnullable'));
+    }
+
+
+    public function testgetDefault()
+    {
+        $info = new \Aw\Db\Reflection\Mysql\Table('gg', $this->con, $this->cache);
+        $this->assertEquals('16', $info->getDefault('fint'));
+    }
+
+    public function testisPk()
+    {
+        $info = new \Aw\Db\Reflection\Mysql\Table ('gg', $this->con, $this->cache);
+        $this->assertTrue($info->isPk('pk1'));
+    }
+
+    public function testisAutoIncrement()
+    {
+        $info = new \Aw\Db\Reflection\Mysql\Table ('schedules', $this->con, $this->cache);
+        $this->assertTrue($info->isAutoIncrement('schedeles_id'));
+    }
 }
 
 

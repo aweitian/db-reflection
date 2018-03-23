@@ -1,12 +1,14 @@
 <?php
 
-namespace Tian\Db;
-use \Tian\Connection\MysqlPdoConn;
-use \Tian\ICache;
-class MySqlDbReflection implements IDbReflection {
+namespace Aw\Db\Reflection\Mysql;
+use Aw\Db\Connection\Mysql;
+use Aw\Cache\ICache;
+use Aw\Db\Reflection\IDbReflection;
+
+class Db implements IDbReflection {
     /**
      *
-     * @var MysqlPdoConn
+     * @var Mysql
      */
     public $connection;
     /**
@@ -15,7 +17,7 @@ class MySqlDbReflection implements IDbReflection {
      */
     public $cache;
     private static $descriptions = null;
-    public function __construct(MysqlPdoConn $connection, ICache $cache = null) {
+    public function __construct(Mysql $connection, ICache $cache = null) {
         $this->cache = $cache;
         $this->connection = $connection;
         if (is_null ( self::$descriptions ))
@@ -51,17 +53,16 @@ class MySqlDbReflection implements IDbReflection {
         }
         return $ret;
     }
+
     /**
-     *
-     * {@inheritdoc}
-     *
-     * @see \Tian\IDbReflection::tableExists()
+     * @param $tabname
      * @return bool
      */
     public function tableExists($tabname) {
         $hash = $this->getTableNames ();
         return in_array ( $tabname, $hash );
     }
+
     protected function getDescription() {
         if (! is_null ( $this->cache )) {
             $ret = $this->cache->get ( 'dbflection.alldescription' );
