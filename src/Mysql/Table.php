@@ -96,6 +96,9 @@ class Table implements ITableReflection
         return 'Tian.MysqlTableReflection.descriptions.' . $this->tabname;
     }
 
+    /**
+     * @return mixed
+     */
     public function getPk()
     {
         $this->initTableColDecription();
@@ -103,6 +106,58 @@ class Table implements ITableReflection
         foreach (self::$col_descriptions [$this->tabname] as $val) {
             if ($val ["Key"] == "PRI")
                 $ret [] = $val ["Field"];
+        }
+        return count($ret) == 1 ? $ret[0] : $ret;
+    }
+
+    protected function getAttrs($field)
+    {
+        $this->initTableColDecription();
+        $ret = array();
+        foreach (self::$col_descriptions [$this->tabname] as $val) {
+            $ret [$val ["Field"]] = $val [$field];
+        }
+        return $ret;
+    }
+
+    /**
+     * @return array
+     */
+    public function getDefaults()
+    {
+        return $this->getAttrs("Default");
+    }
+
+    /**
+     * @return array
+     */
+    public function getComments()
+    {
+        return $this->getAttrs("Comment");
+    }
+
+    /**
+     * @return array
+     */
+    public function getLengths()
+    {
+        $this->initTableColDecription();
+        $ret = array();
+        foreach (self::$col_descriptions [$this->tabname] as $val) {
+            $ret [$val ["Field"]] = $this->getLen($val ["Field"]);
+        }
+        return $ret;
+    }
+
+    /**
+     * @return array
+     */
+    public function getTypes()
+    {
+        $this->initTableColDecription();
+        $ret = array();
+        foreach (self::$col_descriptions [$this->tabname] as $val) {
+            $ret [$val ["Field"]] = $this->getType($val ["Field"]);
         }
         return $ret;
     }
@@ -310,13 +365,13 @@ class Table implements ITableReflection
             return false;
         }
         $paramsInput = $params[0];
-        $paramsColumnKey = ($params[1] !== null) ? (string) $params[1] : null;
+        $paramsColumnKey = ($params[1] !== null) ? (string)$params[1] : null;
         $paramsIndexKey = null;
         if (isset($params[2])) {
             if (is_float($params[2]) || is_int($params[2])) {
-                $paramsIndexKey = (int) $params[2];
+                $paramsIndexKey = (int)$params[2];
             } else {
-                $paramsIndexKey = (string) $params[2];
+                $paramsIndexKey = (string)$params[2];
             }
         }
         $resultArray = array();
@@ -325,7 +380,7 @@ class Table implements ITableReflection
             $keySet = $valueSet = false;
             if ($paramsIndexKey !== null && array_key_exists($paramsIndexKey, $row)) {
                 $keySet = true;
-                $key = (string) $row[$paramsIndexKey];
+                $key = (string)$row[$paramsIndexKey];
             }
             if ($paramsColumnKey === null) {
                 $valueSet = true;
