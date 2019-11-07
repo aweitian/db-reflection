@@ -10,17 +10,18 @@ class TableReflectionTest extends PHPUnit_Framework_TestCase
         $this->con = new Aw\Db\Connection\Mysql (array(
             'host' => '127.0.0.1',
             'port' => 3306,
-            'database' => 'garri',
+            'database' => 'mysql',
             'user' => 'root',
             'password' => 'root',
             'charset' => 'utf8'
         ));
 
-//        $sql = "CREATE DATABASE IF NOT EXISTS `garri` CHARACTER SET UTF8 COLLATE utf8_general_ci;";
-//        $this->con->exec($sql);
-
+        $sql = "CREATE DATABASE IF NOT EXISTS `garri` CHARACTER SET UTF8 COLLATE utf8_general_ci;";
+        $this->con->exec($sql);
+        $this->con->useDb("garri");
+//        $this->con->exec("use garri");
         $this->con->exec("
-            CREATE TABLE `gg` (
+            CREATE TABLE IF NOT EXISTS `gg` (
               `pk1` int(10) unsigned NOT NULL,
               `pk2` int(10) unsigned NOT NULL,
               `fint` int(10) unsigned DEFAULT '16',
@@ -32,7 +33,7 @@ class TableReflectionTest extends PHPUnit_Framework_TestCase
               UNIQUE KEY `fint` (`fint`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='gg_comment';
 			
-			CREATE TABLE `schedules` (
+			CREATE TABLE  IF NOT EXISTS `schedules` (
 			  `schedeles_id` int(11) NOT NULL AUTO_INCREMENT,
 			  `schedeles_date` date NOT NULL,
 			  `schedeles_doc` int(11) NOT NULL,
